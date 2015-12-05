@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ConwaysGameOfLife
@@ -7,15 +8,13 @@ namespace ConwaysGameOfLife
 	{
 		private readonly int width;
 		private readonly int height;
-		private readonly IGameUi ui;
-		private int[,] cellAge;
+		private readonly int[,] cellAge;
 
-		public Game(int width, int height, IGameUi ui)
+		public Game(int width, int height, int [,] cellAge=null)
 		{
 			this.width = width;
 			this.height = height;
-			this.ui = ui;
-			cellAge = new int[width, height];
+			this.cellAge = cellAge ?? new int[width, height];
 		}
 
 		public int GetAge(int x, int y)
@@ -23,25 +22,26 @@ namespace ConwaysGameOfLife
 			return cellAge[(x + width) % width, (y + height) % height];
 		}
 
-		public void ReviveCells(params Point[] points)
+		public Game ReviveCells(params Point[] points)
 		{
+		    var newCellAge = new int[width, height];        
 			foreach (var pos in points)
-				cellAge[(pos.X + width) % width, (pos.Y + height) % height] = 1;
-			ui.Update(this);
+			{
+			    newCellAge[(pos.X + width)%width, (pos.Y + height)%height] = 1;
+			}
+		    return new Game(width, height, newCellAge);
 		}
 
-		public void Step()
+		public Game Step()
 		{
 			int[,] newCellAge = new int[width, height];
-			for (int y = 0; y < height; y++)
+            for (int y = 0; y < height; y++)
 				for (int x = 0; x < width; x++)
 				{
 					var aliveCount = GetNeighbours(x, y).Count(p => GetAge(p.X, p.Y) > 0);
 					newCellAge[x, y] = NewCellAge(cellAge[x, y], aliveCount);
-					if (newCellAge[x, y] != cellAge[x, y])
-						ui.Update(x, y, newCellAge[x, y]);
-			}
-			cellAge = newCellAge;
+    			}
+			return new Game(width, height, newCellAge);
 		}
 
 		private static int NewCellAge(int age, int aliveNeighbours)

@@ -14,10 +14,13 @@ namespace ConwaysGameOfLife
 		private readonly int height;
 		private static readonly ConsoleColor[] colors =
 		{
-			ConsoleColor.Black,  
-			ConsoleColor.DarkGray, 
-			ConsoleColor.Gray, 
-			ConsoleColor.White
+			ConsoleColor.Black,
+//			ConsoleColor.DarkGray, 
+			ConsoleColor.Red, 
+//			ConsoleColor.Gray,
+            ConsoleColor.Yellow,  
+//			ConsoleColor.White,
+			ConsoleColor.Blue,
 		};
 
 		public void Update(IReadonlyField field)

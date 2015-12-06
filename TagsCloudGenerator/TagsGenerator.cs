@@ -8,9 +8,12 @@ namespace TagsCloudGenerator
     internal class TagsGenerator
     {
         private static readonly Random Random = new Random();
-        public static Color GetRandomColor(Color[] colors) => 
+
+        public static Color GetRandomColor(Color[] colors) =>
             colors[Random.Next(colors.Length - 1)];
-        public static IEnumerable<Tag> BuildTags(Statistic statistic, Options options, Settings settings, Func<int, int, Point> pack)
+
+        public static IEnumerable<Tag> BuildTags(Statistic statistic, Options options, Settings settings,
+            Func<int, int, Point> pack)
         {
             var currentHeight = 0;
             var currentWidth = 0;
@@ -18,10 +21,10 @@ namespace TagsCloudGenerator
             {
                 var font = FontGenerator.GetFont(settings, statistic, word);
                 var rectangleSize = GetTagSize(word, font);
-                var location = pack((int)rectangleSize.Width, (int)rectangleSize.Height);
+                var location = pack((int) rectangleSize.Width, (int) rectangleSize.Height);
                 var color = GetRandomColor(settings.Colors);
-                currentWidth = Math.Max(currentWidth, location.X + (int)rectangleSize.Width);
-                currentHeight = Math.Max(currentHeight, location.X + (int)rectangleSize.Height);
+                currentWidth = Math.Max(currentWidth, location.X + (int) rectangleSize.Width);
+                currentHeight = Math.Max(currentHeight, location.X + (int) rectangleSize.Height);
                 if (currentHeight > settings.Height || currentWidth > settings.Width)
                 {
                     yield break;

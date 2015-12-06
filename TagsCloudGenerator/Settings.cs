@@ -5,20 +5,20 @@ namespace TagsCloudGenerator
 {
     internal class Settings
     {
-        public Color[] Colors { get; set; }
+        public Color[] Colors{ get; set; }
 
-        public Dictionary<string, string> SpellingDictionaries { get; set; }
+        public Dictionary<string, string> SpellingDictionaries{ get; set; }
 
-        public string FontName { get; set; }
+        public string FontName{ get; set; }
 
-        public int TagsCount { get; set; }
+        public int TagsCount{ get; set; }
 
-        public int MinFontSize { get; set; }
+        public int MinFontSize{ get; set; }
 
-        public int MaxFontSize { get; set; }
+        public int MaxFontSize{ get; set; }
 
-        public int Width { get; set; }
+        public int Width{ get; set; }
 
-        public int Height { get; set; }
+        public int Height{ get; set; }
     }
 }

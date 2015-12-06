@@ -13,9 +13,9 @@ namespace TagsCloudGenerator
             Font = font;
         }
 
-        public Word Word { get; }
-        public Point Location { get; }
-        public Color Color { get; }
-        public Font Font { get; }
+        public Word Word{ get; }
+        public Point Location{ get; }
+        public Color Color{ get; }
+        public Font Font{ get; }
     }
 }

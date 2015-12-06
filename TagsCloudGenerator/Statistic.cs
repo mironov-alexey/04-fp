@@ -6,7 +6,7 @@ namespace TagsCloudGenerator
 {
     internal class Statistic
     {
-        public List<Word> WordsWithFrequency{ get; }
+        private static readonly Random Random = new Random();
 
         private Statistic(IEnumerable<Word> wordsWithFrequency)
         {
@@ -15,11 +15,12 @@ namespace TagsCloudGenerator
             MinCount = WordsWithFrequency.Min(w => w.Frequency);
         }
 
+        public List<Word> WordsWithFrequency{ get; }
+
         public int MinCount{ get; }
 
         public int MaxCount{ get; }
 
-        private static readonly Random Random = new Random();
         public static Statistic Calculate(IEnumerable<string> words, HashSet<string> blackList, Settings settings)
         {
             var wordsWithFreq = words

@@ -11,7 +11,7 @@ namespace TagsCloudGenerator
                 .Where(s => !string.IsNullOrEmpty(s))
                 .Select(x => x.Trim());
 
-        public static HashSet<string> LoadBlackListFromTxt(string pathToBlackList) => 
+        public static HashSet<string> LoadBlackListFromTxt(string pathToBlackList) =>
             new HashSet<string>(LoadWordsFromTxt(pathToBlackList));
     }
 }

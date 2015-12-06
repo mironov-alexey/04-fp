@@ -1,9 +1,8 @@
-using System;
-using NUnit.Framework;
+	using System;
+	using Composition.Monads;
+	using NUnit.Framework;
 
-namespace Composition.Monads
-{
-	[TestFixture]
+[TestFixture]
 	public class Maybe_should
 	{
 		[Test]
@@ -24,9 +23,7 @@ namespace Composition.Monads
 			Assert.That(m.Success, Is.False);
 			Assert.That(m.Error, Is.EqualTo(e));
 		}
-		
-		// TODO Maybe Uncomment!
-		/*
+
 		[Test]
 		public void Support_Linq_Syntax()
 		{
@@ -65,6 +62,4 @@ namespace Composition.Monads
 			Assert.That(res.Error, Is.InstanceOf<FormatException>());
 			Console.WriteLine(res.Error.Message);
 		}
-		*/
 	}
-}

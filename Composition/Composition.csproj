@@ -50,6 +50,7 @@
     <Compile Include="HOF\DataSource.cs" />
     <Compile Include="Monads\Maybe.cs" />
     <Compile Include="Monads\Maybe_should.cs" />
+    <Compile Include="Monads\Maybe_Solved.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

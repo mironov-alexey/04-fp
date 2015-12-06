@@ -1,0 +1,23 @@
+﻿{
+  "dictionaries": [
+    [ "./en_US.aff", "./en_US.dic" ]
+  ],
+  "colors": [
+    "Red",
+    "Green",
+    "Blue",
+    "Black",
+    "Gray",
+    "BlueViolet",
+    "Crimson",
+    "Firebrick",
+    "DarkSlateBlue",
+    "SaddleBrown",
+    "DarkTurquoise",
+    "#a9a9a9"
+  ],
+  "tagsCount": 80,
+  "fontSize": [ 30, 120 ],
+  "fontName": "Times New Roman",
+  "size" :  [1280, 1024]
+}

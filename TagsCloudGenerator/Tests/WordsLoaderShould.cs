@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using Telerik.JustMock.AutoMock.Ninject.Infrastructure;
@@ -37,7 +38,14 @@ namespace TagsCloudGenerator.Tests
         public void ThrowException_IfFileNotFound()
         {
             var pathToWords = "doesn'texist.txt";
-            Assert.Throws<FileNotFoundException>(() => { WordsLoader.LoadWordsFromTxt(pathToWords); });
+            Assert.Throws<FileNotFoundException>(() => { var words = WordsLoader.LoadWordsFromTxt(pathToWords); });
+        }
+
+        [Test]
+        public void ThrowException_IfWrongFileExtension()
+        {
+            var pathToWords = "somefile.doc";
+            Assert.Throws<ArgumentException>(() => { WordsLoader.LoadWordsFromTxt(pathToWords); });
         }
     }
 }

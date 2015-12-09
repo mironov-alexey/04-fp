@@ -7,15 +7,18 @@ namespace TagsCloudGenerator
 {
     internal static class WordsLoader
     {
-        public static IReadOnlyList<string> LoadWordsFromTxt(string pathToWords)
+        private static readonly Dictionary<string, Func<string, IReadOnlyList<string>>> LoadingFuncs = 
+            new Dictionary<string, Func<string, IReadOnlyList<string>>>
         {
-            if (Path.GetExtension(pathToWords) != ".txt")
+            {".txt", LoadFromTxt },
+        };
+        private static IReadOnlyList<string> LoadFromTxt(string path)
+        {
+            if (Path.GetExtension(path) != ".txt")
                 throw new ArgumentException("The file must have the .txt extension.");
-            if (!File.Exists(pathToWords))
-                throw new FileNotFoundException("The file specified does not exist.");
             try
             {
-                return File.ReadLines(pathToWords)
+                return File.ReadLines(path)
                     .Where(s => !string.IsNullOrEmpty(s))
                     .Select(x => x.Trim())
                     .ToList();
@@ -26,8 +29,16 @@ namespace TagsCloudGenerator
                 return new List<string>();
             }
         }
+        public static IReadOnlyList<string> LoadWords(string pathToWords)
+        {
+            if (string.IsNullOrEmpty(pathToWords))
+                throw new ArgumentException("The path to file does not be null or empty .");
+            if (!File.Exists(pathToWords))
+                throw new FileNotFoundException("The file specified does not exist.");
+            return LoadingFuncs[Path.GetExtension(pathToWords)](pathToWords);
+        }
 
-        public static HashSet<string> LoadBlackListFromTxt(string pathToBlackList) =>
-            new HashSet<string>(LoadWordsFromTxt(pathToBlackList));
+        public static HashSet<string> LoadBlackList(string pathToBlackList) =>
+            new HashSet<string>(LoadWords(pathToBlackList));
     }
 }

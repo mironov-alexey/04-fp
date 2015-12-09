@@ -21,8 +21,8 @@ namespace TagsCloudGenerator
             var options = new Options();
             Parser.Default.ParseArguments(args, options);
             var settings = SettingsLoader.LoadFromFile(options.PathToConfig);
-            var words = WordsLoader.LoadWordsFromTxt(options.PathToWords);
-            var blackList = WordsLoader.LoadBlackListFromTxt(options.PathToBlackList);
+            var words = WordsLoader.LoadWords(options.PathToWords);
+            var blackList = WordsLoader.LoadBlackList(options.PathToBlackList);
             var statistic = Statistic.Calculate(words, blackList, settings);
             var packer = new ArevaloRectanglePacker(int.MaxValue, int.MaxValue);
             var tags = TagsGenerator.BuildTags(statistic, settings, packer.Pack, FontGenerator.GetFont);

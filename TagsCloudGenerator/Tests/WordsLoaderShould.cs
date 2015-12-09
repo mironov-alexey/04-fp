@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
@@ -22,7 +23,7 @@ namespace TagsCloudGenerator.Tests
         {
             var words = new[] {"a", "a", "a", "a", "b", "b", "b", "c", "c", "c", "d"};
             File.WriteAllLines(TestFileName, words);
-            var actualWords = WordsLoader.LoadBlackListFromTxt(_options.PathToBlackList);
+            var actualWords = WordsLoader.LoadBlackList(_options.PathToBlackList);
             CollectionAssert.AreEqual(actualWords, words.Distinct());
         }
 
@@ -30,7 +31,7 @@ namespace TagsCloudGenerator.Tests
         public void LoadWordsFromTxt()
         {
             File.WriteAllLines(TestFileName, new[] {"a", "b", "c", "d"});
-            var actualWords = WordsLoader.LoadWordsFromTxt(TestFileName);
+            var actualWords = WordsLoader.LoadWords(TestFileName);
             CollectionAssert.AreEqual(actualWords, new[] {"a", "b", "c", "d"});
         }
         
@@ -38,14 +39,22 @@ namespace TagsCloudGenerator.Tests
         public void ThrowException_IfFileNotFound()
         {
             var pathToWords = "doesn'texist.txt";
-            Assert.Throws<FileNotFoundException>(() => { var words = WordsLoader.LoadWordsFromTxt(pathToWords); });
+            Assert.Throws<FileNotFoundException>(() => { WordsLoader.LoadWords(pathToWords); });
         }
 
         [Test]
-        public void ThrowException_IfWrongFileExtension()
+        public void ThrowException_IfNullOrEmptyPath()
         {
-            var pathToWords = "somefile.doc";
-            Assert.Throws<ArgumentException>(() => { WordsLoader.LoadWordsFromTxt(pathToWords); });
+            Assert.Throws<ArgumentException>(() => { WordsLoader.LoadWords(""); });
+            Assert.Throws<ArgumentException>(() => { WordsLoader.LoadWords(null); });
+        }
+
+        [Test]
+        public void ThrowException_IfUnknownFileExtension()
+        {
+            var path = "somefile.kek";
+            File.WriteAllText(path, "");
+            Assert.Throws<KeyNotFoundException>(() => { WordsLoader.LoadWords(path); });
         }
     }
 }

@@ -8,20 +8,20 @@ namespace TagsCloudGenerator
     {
         private static readonly Random Random = new Random();
 
-        private Statistic(IEnumerable<Word> wordsWithFrequency)
+        private Statistic(IReadOnlyList<Word> wordsWithFrequency)
         {
-            WordsWithFrequency = wordsWithFrequency.ToList();
+            WordsWithFrequency = wordsWithFrequency;
             MaxCount = WordsWithFrequency.Max(w => w.Frequency);
             MinCount = WordsWithFrequency.Min(w => w.Frequency);
         }
 
-        public List<Word> WordsWithFrequency{ get; }
+        public IReadOnlyList<Word> WordsWithFrequency{ get; }
 
         public int MinCount{ get; }
 
         public int MaxCount{ get; }
 
-        public static Statistic Calculate(IEnumerable<string> words, HashSet<string> blackList, Settings settings)
+        public static Statistic Calculate(IReadOnlyList<string> words, HashSet<string> blackList, Settings settings)
         {
             var wordsWithFreq = words
                 .FilterBannedWords(blackList)

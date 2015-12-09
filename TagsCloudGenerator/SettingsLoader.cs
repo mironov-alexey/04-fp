@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TagsCloudGenerator
 {
-    internal class SettingsLoader
+    internal static class SettingsLoader
     {
         private static JObject _jsonConfig;
 

@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudGenerator
 {
-    internal class CloudGenerator
+    internal static class CloudGenerator
     {
         private const int MaxImageSize = 5000;
 

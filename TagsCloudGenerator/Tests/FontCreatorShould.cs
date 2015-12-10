@@ -14,13 +14,24 @@ namespace TagsCloudGenerator.Tests
             _statistic = Statistic.Calculate(
                 new List<string>
                 {
-                    "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", 
-                    "b", "b", "b",
+                    "a",
+                    "a",
+                    "a",
+                    "a",
+                    "a",
+                    "a",
+                    "a",
+                    "a",
+                    "a",
+                    "a",
+                    "b",
+                    "b",
+                    "b",
                     "c"
                 },
                 new HashSet<string>(),
                 _settings
-            );
+                );
         }
 
         private Settings _settings;

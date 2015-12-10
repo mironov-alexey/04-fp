@@ -14,8 +14,6 @@ namespace TagsCloudGenerator
         };
         private static IReadOnlyList<string> LoadFromTxt(string path)
         {
-            if (Path.GetExtension(path) != ".txt")
-                throw new ArgumentException("The file must have the .txt extension.");
             try
             {
                 return File.ReadLines(path)

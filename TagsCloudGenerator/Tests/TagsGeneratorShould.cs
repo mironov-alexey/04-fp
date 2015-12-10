@@ -11,7 +11,6 @@ namespace TagsCloudGenerator.Tests
     [TestFixture]
     public class TagsGeneratorShould
     {
-        private Func<Settings, Statistic, Word, Font> _fontGenerator;
         [SetUp]
         public void SetUp()
         {
@@ -30,9 +29,11 @@ namespace TagsCloudGenerator.Tests
             _statistic = Statistic.Calculate(_words, new HashSet<string>(), _settings);
             _pack = new ArevaloRectanglePacker(int.MaxValue, int.MaxValue).Pack;
             _fontGenerator = (settings, statistic, word) => new Font("Arial", 10);
-            _tags = TagsGenerator.BuildTags(_statistic, _settings, _pack, 
+            _tags = TagsGenerator.BuildTags(_statistic, _settings, _pack,
                 _fontGenerator);
         }
+
+        private Func<Settings, Statistic, Word, Font> _fontGenerator;
 
         private Settings _settings;
         private Statistic _statistic;

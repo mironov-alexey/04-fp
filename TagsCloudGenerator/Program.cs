@@ -1,4 +1,6 @@
-﻿using CommandLine;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using CommandLine;
 using Nuclex.Game.Packing;
 
 namespace TagsCloudGenerator
@@ -21,12 +23,12 @@ namespace TagsCloudGenerator
             var options = new Options();
             Parser.Default.ParseArguments(args, options);
             var settings = SettingsLoader.LoadFromFile(options.PathToConfig);
-            var words = WordsLoader.LoadWords(options.PathToWords);
-            var blackList = WordsLoader.LoadBlackList(options.PathToBlackList);
+            IReadOnlyList<string> words = WordsLoader.LoadWords(options.PathToWords);
+            HashSet<string> blackList = WordsLoader.LoadBlackList(options.PathToBlackList);
             var statistic = Statistic.Calculate(words, blackList, settings);
             var packer = new ArevaloRectanglePacker(int.MaxValue, int.MaxValue);
-            var tags = TagsGenerator.BuildTags(statistic, settings, packer.Pack, FontGenerator.GetFont);
-            using (var cloud = CloudGenerator.GenerateCloudImage(tags, settings))
+            IReadOnlyList<Tag> tags = TagsGenerator.BuildTags(statistic, settings, packer.Pack, FontGenerator.GetFont);
+            using (Image cloud = CloudGenerator.GenerateCloudImage(tags, settings))
             {
                 CloudSaver.Save(cloud, options);
             }

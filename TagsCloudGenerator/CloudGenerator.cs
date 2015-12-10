@@ -7,7 +7,7 @@ namespace TagsCloudGenerator
     {
         private const int MaxImageSize = 5000;
 
-        private static Image GeneratePreReleaseImage(IEnumerable<Tag> tags)
+        private static Image GeneratePreReleaseImage(IReadOnlyList<Tag> tags)
         {
             var img = new Bitmap(MaxImageSize, MaxImageSize);
             using (var graphics = Graphics.FromImage(img))
@@ -19,7 +19,7 @@ namespace TagsCloudGenerator
             }
         }
 
-        public static Image GenerateCloudImage(IEnumerable<Tag> tags, Settings settings)
+        public static Image GenerateCloudImage(IReadOnlyList<Tag> tags, Settings settings)
         {
             using (var preReleaseImage = GeneratePreReleaseImage(tags))
             {

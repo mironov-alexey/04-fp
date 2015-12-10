@@ -12,12 +12,13 @@ namespace TagsCloudGenerator
         private static Color GetRandomColor(Color[] colors) =>
             colors[Random.Next(colors.Length - 1)];
 
-        public static IEnumerable<Tag> BuildTags(Statistic statistic, Settings settings,
+        public static IReadOnlyList<Tag> BuildTags(Statistic statistic, Settings settings,
             Func<int, int, Point> pack,
             Func<Settings, Statistic, Word, Font> fontGenerator)
         {
             var currentHeight = 0;
             var currentWidth = 0;
+            var tags = new List<Tag>();
             foreach (var word in statistic.WordsWithFrequency)
             {
                 var font = fontGenerator(settings, statistic, word);
@@ -27,11 +28,10 @@ namespace TagsCloudGenerator
                 currentWidth = Math.Max(currentWidth, location.X + (int) rectangleSize.Width);
                 currentHeight = Math.Max(currentHeight, location.X + (int) rectangleSize.Height);
                 if (currentHeight > settings.Height || currentWidth > settings.Width)
-                {
-                    yield break;
-                }
-                yield return new Tag(word, location, font, color);
+                    return tags;
+                tags.Add(new Tag(word, location, font, color));
             }
+            return tags;
         }
 
         private static SizeF GetTagSize(Word word, Font font)

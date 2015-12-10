@@ -3,7 +3,7 @@ using System.Drawing.Imaging;
 
 namespace TagsCloudGenerator
 {
-    internal class CloudSaver
+    internal static class CloudSaver
     {
         public static void Save(Image image, Options options)
         {

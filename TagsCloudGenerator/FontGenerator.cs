@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace TagsCloudGenerator
 {
-    internal class FontGenerator
+    internal static class FontGenerator
     {
         public static Font GetFont(Settings settings, Statistic statistic, Word word)
         {

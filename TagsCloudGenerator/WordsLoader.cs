@@ -7,11 +7,12 @@ namespace TagsCloudGenerator
 {
     internal static class WordsLoader
     {
-        private static readonly Dictionary<string, Func<string, IReadOnlyList<string>>> LoadingFuncs = 
+        private static readonly Dictionary<string, Func<string, IReadOnlyList<string>>> LoadingFuncs =
             new Dictionary<string, Func<string, IReadOnlyList<string>>>
-        {
-            {".txt", LoadFromTxt },
-        };
+            {
+                {".txt", LoadFromTxt}
+            };
+
         private static IReadOnlyList<string> LoadFromTxt(string path)
         {
             try
@@ -27,12 +28,16 @@ namespace TagsCloudGenerator
                 return new List<string>();
             }
         }
+
         public static IReadOnlyList<string> LoadWords(string pathToWords)
         {
             if (string.IsNullOrEmpty(pathToWords))
                 throw new ArgumentException("The path to file does not be null or empty .");
             if (!File.Exists(pathToWords))
                 throw new FileNotFoundException("The file specified does not exist.");
+            var extension = Path.GetExtension(pathToWords);
+            if (!LoadingFuncs.ContainsKey(extension))
+                throw new NotSupportedException("This file format is not supported.");
             return LoadingFuncs[Path.GetExtension(pathToWords)](pathToWords);
         }
 

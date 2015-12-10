@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using NUnit.Framework;
 
 namespace TagsCloudGenerator.Tests
@@ -12,26 +13,9 @@ namespace TagsCloudGenerator.Tests
         {
             _settings = new Settings {MaxFontSize = 20, MinFontSize = 10, FontName = "Arial", TagsCount = 3};
             _statistic = Statistic.Calculate(
-                new List<string>
-                {
-                    "a",
-                    "a",
-                    "a",
-                    "a",
-                    "a",
-                    "a",
-                    "a",
-                    "a",
-                    "a",
-                    "a",
-                    "b",
-                    "b",
-                    "b",
-                    "c"
-                },
+                "aaaaaaaaaabbbc".ToCharArray().Select(c => c.ToString()).ToList(),
                 new HashSet<string>(),
-                _settings
-                );
+                _settings);
         }
 
         private Settings _settings;
@@ -40,24 +24,24 @@ namespace TagsCloudGenerator.Tests
         [Test]
         public void Correctly_GetFontMaxSize()
         {
-            var font = FontGenerator.GetFont(_settings, _statistic, new Word("a", 10));
             var expectedFont = new Font("Arial", 20);
+            var font = FontGenerator.GetFont(_settings, _statistic, new Word("a", 10));
             Assert.AreEqual(expectedFont, font);
         }
 
         [Test]
         public void Correctly_GetFontMiddleSize()
         {
-            var font = FontGenerator.GetFont(_settings, _statistic, new Word("b", 3));
             var expectedFont = new Font("Arial", 14);
+            var font = FontGenerator.GetFont(_settings, _statistic, new Word("b", 3));
             Assert.AreEqual(expectedFont, font);
         }
 
         [Test]
         public void Correctly_GetFontMinSize()
         {
-            var font = FontGenerator.GetFont(_settings, _statistic, new Word("c", 1));
             var expectedFont = new Font("Arial", 10);
+            var font = FontGenerator.GetFont(_settings, _statistic, new Word("c", 1));
             Assert.AreEqual(expectedFont, font);
         }
     }

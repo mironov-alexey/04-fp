@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
-using Telerik.JustMock.AutoMock.Ninject.Infrastructure;
 
 namespace TagsCloudGenerator.Tests
 {
@@ -34,7 +33,7 @@ namespace TagsCloudGenerator.Tests
             var actualWords = WordsLoader.LoadWords(TestFileName);
             CollectionAssert.AreEqual(actualWords, new[] {"a", "b", "c", "d"});
         }
-        
+
         [Test]
         public void ThrowException_IfFileNotFound()
         {
@@ -52,9 +51,9 @@ namespace TagsCloudGenerator.Tests
         [Test]
         public void ThrowException_IfUnknownFileExtension()
         {
-            var path = "somefile.kek";
+            const string path = "somefile.kek";
             File.WriteAllText(path, "");
-            Assert.Throws<KeyNotFoundException>(() => { WordsLoader.LoadWords(path); });
+            Assert.Throws<NotSupportedException>(() => { WordsLoader.LoadWords(path); });
         }
     }
 }

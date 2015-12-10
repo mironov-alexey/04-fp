@@ -37,7 +37,7 @@ namespace TagsCloudGenerator.Tests
 
         private Settings _settings;
         private Statistic _statistic;
-        private IEnumerable<Tag> _tags;
+        private IReadOnlyList<Tag> _tags;
         private Func<int, int, Point> _pack;
         private List<string> _words;
 

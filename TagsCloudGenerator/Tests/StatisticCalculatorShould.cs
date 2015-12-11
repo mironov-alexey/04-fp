@@ -23,14 +23,14 @@ namespace TagsCloudGenerator.Tests
         [Test]
         public void CorrectlyCalculate_MaxWordCount()
         {
-            var statistic = Statistic.Calculate(_words, new HashSet<string>(), _settings);
+            var statistic = Statistic.Calculate(_words, _settings);
             Assert.AreEqual(3, statistic.MaxCount);
         }
 
         [Test]
         public void CorrectlyCalculate_MinWordCount()
         {
-            var statistic = Statistic.Calculate(_words, new HashSet<string>(), _settings);
+            var statistic = Statistic.Calculate(_words, _settings);
             Assert.AreEqual(1, statistic.MinCount);
         }
 
@@ -42,7 +42,7 @@ namespace TagsCloudGenerator.Tests
             for (var i = 1; i <= size; i++)
             {
                 var inputWords = string.Join(" ", Enumerable.Range(0, i).Select(_ => "a")).Split().ToList();
-                var statistic = Statistic.Calculate(inputWords, new HashSet<string>(), _settings);
+                var statistic = Statistic.Calculate(inputWords, _settings);
                 actualFrequencies.Add(statistic.WordsWithFrequency[0].Frequency);
             }
             var expectedFrequencies = Enumerable.Range(1, size).ToList();
@@ -52,7 +52,7 @@ namespace TagsCloudGenerator.Tests
         [Test]
         public void ReturnCorrectWordsCount()
         {
-            var statistic = Statistic.Calculate(_words, new HashSet<string>(), _settings);
+            var statistic = Statistic.Calculate(_words, _settings);
             var words = statistic.WordsWithFrequency;
             Assert.AreEqual(3, words.Count);
         }
@@ -61,7 +61,7 @@ namespace TagsCloudGenerator.Tests
         public void ReturnsCorrectWordCount_WithTopConstraint()
         {
             _settings.TagsCount = 2;
-            var statistic = Statistic.Calculate(_words, new HashSet<string>(), _settings);
+            var statistic = Statistic.Calculate(_words, _settings);
             var words = statistic.WordsWithFrequency;
             Assert.AreEqual(2, words.Count);
         }

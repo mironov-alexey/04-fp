@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using NUnit.Framework;
 
@@ -14,7 +13,6 @@ namespace TagsCloudGenerator.Tests
             _settings = new Settings {MaxFontSize = 20, MinFontSize = 10, FontName = "Arial", TagsCount = 3};
             _statistic = Statistic.Calculate(
                 "aaaaaaaaaabbbc".ToCharArray().Select(c => c.ToString()).ToList(),
-                new HashSet<string>(),
                 _settings);
         }
 

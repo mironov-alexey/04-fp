@@ -42,7 +42,6 @@ namespace TagsCloudGenerator.Tests
                     "a",
                     "b"
                 },
-                new HashSet<string>(),
                 _settings
                 );
             _tags = TagsGenerator.BuildTags(_statistic, _settings, _pack, _fontGenerator);

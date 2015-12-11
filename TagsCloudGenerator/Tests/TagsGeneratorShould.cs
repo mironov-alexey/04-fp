@@ -26,7 +26,7 @@ namespace TagsCloudGenerator.Tests
                 TagsCount = 3
             };
             _words = new List<string> {"a", "b", "b", "c", "c", "c"};
-            _statistic = Statistic.Calculate(_words, new HashSet<string>(), _settings);
+            _statistic = Statistic.Calculate(_words, _settings);
             _pack = new ArevaloRectanglePacker(int.MaxValue, int.MaxValue).Pack;
             _fontGenerator = (settings, statistic, word) => new Font("Arial", 10);
             _tags = TagsGenerator.BuildTags(_statistic, _settings, _pack,
@@ -63,7 +63,7 @@ namespace TagsCloudGenerator.Tests
         {
             _settings.Width = 200;
             _settings.Height = 200;
-            _statistic = Statistic.Calculate(_words, new HashSet<string>(), _settings);
+            _statistic = Statistic.Calculate(_words, _settings);
             _tags = TagsGenerator.BuildTags(_statistic, _settings, _pack, _fontGenerator);
             Assert.AreEqual(_words.Distinct().Count(), _tags.Count());
         }
@@ -74,7 +74,7 @@ namespace TagsCloudGenerator.Tests
             _settings.TagsCount = 2;
             _settings.Width = 200;
             _settings.Height = 200;
-            _statistic = Statistic.Calculate(_words, new HashSet<string>(), _settings);
+            _statistic = Statistic.Calculate(_words, _settings);
             _tags = TagsGenerator.BuildTags(_statistic, _settings, _pack, _fontGenerator);
             Assert.AreEqual(_settings.TagsCount, _tags.Count());
         }
@@ -84,7 +84,7 @@ namespace TagsCloudGenerator.Tests
         {
             _settings.Width = 200;
             _settings.Height = 200;
-            _statistic = Statistic.Calculate(_words, new HashSet<string>(), _settings);
+            _statistic = Statistic.Calculate(_words, _settings);
             _tags = TagsGenerator.BuildTags(_statistic, _settings, _pack, _fontGenerator);
             CollectionAssert.AreEquivalent(
                 _statistic.WordsWithFrequency.Select(w => w.Value),

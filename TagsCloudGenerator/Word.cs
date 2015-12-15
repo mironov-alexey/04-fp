@@ -1,6 +1,6 @@
 namespace TagsCloudGenerator
 {
-    internal class Word
+    public class Word
     {
         public Word(string value, int frequency)
         {

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TagsCloudGenerator
 {
-    internal class Statistic
+    public class Statistic
     {
         private Statistic(IReadOnlyList<Word> wordsWithFrequency)
         {
@@ -19,7 +19,7 @@ namespace TagsCloudGenerator
 
         public int MaxCount{ get; }
 
-        public static Statistic Calculate(IReadOnlyList<string> words, Settings settings)
+        public static Statistic Calculate(IEnumerable<string> words, Settings settings)
         {
             var random = new Random();
             var wordsWithFreq = words

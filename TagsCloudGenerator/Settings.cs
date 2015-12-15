@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudGenerator
 {
-    internal class Settings
+    public class Settings
     {
         public Color[] Colors{ get; set; }
 

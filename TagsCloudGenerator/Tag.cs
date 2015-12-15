@@ -3,7 +3,7 @@ using Point = Microsoft.Xna.Framework.Point;
 
 namespace TagsCloudGenerator
 {
-    internal class Tag
+    public class Tag
     {
         public Tag(Word word, Point location, Font font, Color color)
         {

@@ -1,4 +1,5 @@
-﻿using CommandLine;
+﻿using System;
+using CommandLine;
 using Nuclex.Game.Packing;
 //using Annytab;
 //using Iveonik.Stemmers;
@@ -24,12 +25,11 @@ namespace TagsCloudGenerator
             var options = new Options();
             Parser.Default.ParseArguments(args, options);
             var settings = SettingsLoader.LoadFromFile(options.PathToConfig);
-            var words = WordsLoader.LoadWords(options.PathToWords);
-            var blackList = WordsLoader.LoadBlackList(options.PathToBlackList);
-            var filteredWords = words.FilterBannedWords(blackList);
-            var statistic = Statistic.Calculate(filteredWords, settings);
-            var packer = new ArevaloRectanglePacker(int.MaxValue, int.MaxValue);
-            var tags = TagsGenerator.BuildTags(statistic, settings, packer.Pack, FontGenerator.GetFont);
+            var tags = WordsLoader
+                .LoadWords(options.PathToWords)
+                .FilterBannedWords(options.PathToBlackList)
+                .Calculate(settings)
+                .BuildTags(settings, new ArevaloRectanglePacker(int.MaxValue, int.MaxValue).Pack, FontGenerator.GetFont);
             using (var cloud = CloudGenerator.GenerateCloudImage(tags, settings))
             {
                 CloudSaver.Save(cloud, options);

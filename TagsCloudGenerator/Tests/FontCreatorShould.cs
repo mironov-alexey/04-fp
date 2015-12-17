@@ -23,7 +23,7 @@ namespace TagsCloudGenerator.Tests
         public void Correctly_GetFontMaxSize()
         {
             var expectedFont = new Font("Arial", 20);
-            var font = FontGenerator.GetFont(_settings, _statistic, new Word("a", 10));
+            var font = FontGenerator.GetFont(_settings, _statistic.MaxCount, _statistic.MinCount, new Word("a", 10));
             Assert.AreEqual(expectedFont, font);
         }
 
@@ -31,7 +31,7 @@ namespace TagsCloudGenerator.Tests
         public void Correctly_GetFontMiddleSize()
         {
             var expectedFont = new Font("Arial", 14);
-            var font = FontGenerator.GetFont(_settings, _statistic, new Word("b", 3));
+            var font = FontGenerator.GetFont(_settings, _statistic.MaxCount, _statistic.MinCount, new Word("b", 3));
             Assert.AreEqual(expectedFont, font);
         }
 
@@ -39,7 +39,7 @@ namespace TagsCloudGenerator.Tests
         public void Correctly_GetFontMinSize()
         {
             var expectedFont = new Font("Arial", 10);
-            var font = FontGenerator.GetFont(_settings, _statistic, new Word("c", 1));
+            var font = FontGenerator.GetFont(_settings, _statistic.MaxCount, _statistic.MinCount, new Word("c", 1));
             Assert.AreEqual(expectedFont, font);
         }
     }

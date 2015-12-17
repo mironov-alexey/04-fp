@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using CommandLine;
+using Microsoft.Xna.Framework;
 using Nuclex.Game.Packing;
-//using Annytab;
-//using Iveonik.Stemmers;
 
 namespace TagsCloudGenerator
 {
@@ -10,30 +11,38 @@ namespace TagsCloudGenerator
     {
         private static void Main(string[] args)
         {
-            /*
-                1) Распарсить аргументы командной строки
-                2) Загрузить настройки
-                3) Загрузить список слов
-                4) Загрузить чёрный список
-                x) Привести в начальную форму?
-                5) Отфильтровать слова
-                6) Собрать статистику по словам
-                7) Сформировать информацию для отрисовки
-                8) Отрисовать
-                9) Сохранить
-            */
             var options = new Options();
             Parser.Default.ParseArguments(args, options);
             var settings = SettingsLoader.LoadFromFile(options.PathToConfig);
-            var tags = WordsLoader
+            var wordsWithFrequency = WordsLoader
                 .LoadWords(options.PathToWords)
                 .FilterBannedWords(options.PathToBlackList)
-                .Calculate(settings)
-                .BuildTags(settings, new ArevaloRectanglePacker(int.MaxValue, int.MaxValue).Pack, FontGenerator.GetFont);
+                .GetWordsWithFrequency(settings);
+            var tags = GetTags(settings, wordsWithFrequency, new ArevaloRectanglePacker(int.MaxValue, int.MaxValue).Pack);
             using (var cloud = CloudGenerator.GenerateCloudImage(tags, settings))
             {
                 CloudSaver.Save(cloud, options);
             }
+        }
+
+        private static IEnumerable<Tag> GetTags(Settings settings, IReadOnlyList<Word> wordsWithFrequency, Func<int, int, Point> pack)
+        {
+            Random random = new Random();
+            return wordsWithFrequency
+                .Select(w => new
+                {
+                    Word = w,
+                    Font = FontGenerator.GetFont(
+                        settings,
+                        wordsWithFrequency.Max(wf => wf.Frequency),
+                        wordsWithFrequency.Min(wf => wf.Frequency), w)
+                })
+                .Select(pair => new {pair.Word, pair.Font, Size = TagsGenerator.GetTagSize(pair.Word, pair.Font)})
+                .Select(three => new Tag(
+                    three.Word,
+                    pack((int) three.Size.Width, (int) three.Size.Height),
+                    three.Font,
+                    TagsGenerator.GetRandomColor(settings.Colors, random)));
         }
     }
 }

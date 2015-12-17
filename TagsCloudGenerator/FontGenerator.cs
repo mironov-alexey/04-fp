@@ -4,10 +4,10 @@ namespace TagsCloudGenerator
 {
     internal static class FontGenerator
     {
-        public static Font GetFont(Settings settings, Statistic statistic, Word word)
+        public static Font GetFont(Settings settings, int maxCount, int minCount, Word word)
         {
-            var size = settings.MaxFontSize*(word.Frequency - statistic.MinCount)/
-                       (statistic.MaxCount - statistic.MinCount);
+            var size = settings.MaxFontSize*(word.Frequency - minCount)/
+                       (maxCount - minCount);
             size = size < settings.MinFontSize ? size + settings.MinFontSize : size;
             return new Font(settings.FontName, size);
         }
